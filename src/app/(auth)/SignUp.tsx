@@ -1,14 +1,17 @@
-import {Link} from "expo-router";
+import {Link, Redirect} from "expo-router";
 import {Keyboard, Pressable, Text, TextInput, TouchableWithoutFeedback, View} from "react-native";
 import {globalStyles} from "../../../styles/global";
 import {useState} from "react";
+import {useUser} from "../../../contexts/UserContext"
 
 export default function SignUp(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleSubmit = () => {
-        console.log(password, email)
+    const user = useUser();
+
+    const handleSubmit =  () => {
+        user?.signup(email, password);
     }
 
     return (
@@ -35,7 +38,7 @@ export default function SignUp(){
                 >
                     <Text>Submit</Text>
                 </Pressable>
-                <Link href={'/SignIn'}>
+                <Link href={'/SignIn'} replace>
                     Already have an account? Sign In.
                 </Link>
             </View>
